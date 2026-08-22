@@ -3,288 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Global Squads & Creator Network | Official Directory</title>
+  <title>GroupSor - Enjoy Unlimited Groups</title>
   <style>
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-    }
-    body { 
-      background: #090d16; 
-      color: #f1f5f9; 
-      min-height: 100vh; 
-      display: flex; 
-      justify-content: center; 
-      padding: 20px 12px; 
-    }
-    .wrapper { 
-      max-width: 500px; 
-      width: 100%; 
-    }
-    .header { 
-      text-align: center; 
-      margin-bottom: 18px; 
-    }
-    .badge { 
-      display: inline-block; 
-      padding: 4px 12px; 
-      background: rgba(34, 197, 94, 0.15); 
-      color: #22c55e; 
-      border: 1px solid rgba(34, 197, 94, 0.3); 
-      border-radius: 20px; 
-      font-size: 11px; 
-      font-weight: 700; 
-      text-transform: uppercase; 
-      margin-bottom: 10px; 
-    }
-    .header h1 { 
-      font-size: 22px; 
-      font-weight: 800; 
-      color: #ffffff; 
-      margin-bottom: 6px; 
-    }
-    .header p { 
-      font-size: 13px; 
-      color: #94a3b8; 
-      line-height: 1.4; 
-    }
-    .search-bar { 
-      width: 100%; 
-      padding: 13px 16px; 
-      border-radius: 12px; 
-      border: 1px solid #1e293b; 
-      background: #131b2e; 
-      color: #ffffff; 
-      font-size: 14px; 
-      outline: none; 
-      margin-bottom: 16px; 
-    }
-    .stats-bar { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 12px; 
-      padding: 0 4px; 
-      font-size: 12px; 
-      color: #64748b; 
-    }
-    .groups-list { 
-      display: flex; 
-      flex-direction: column; 
-      gap: 10px; 
-    }
-    .group-card { 
-      background: #131b2e; 
-      border: 1px solid rgba(255, 255, 255, 0.06); 
-      padding: 12px 14px; 
-      border-radius: 14px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-    }
-    .group-left { 
-      display: flex; 
-      align-items: center; 
-      gap: 12px; 
-    }
-    .group-icon { 
-      font-size: 22px; 
-      width: 42px; 
-      height: 42px; 
-      background: #090d16; 
-      border-radius: 10px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-    }
-    .group-title { 
-      font-size: 14px; 
-      font-weight: 600; 
-      color: #f8fafc; 
-      margin-bottom: 2px; 
-    }
-    .group-meta { 
-      font-size: 11px; 
-      color: #22c55e; 
-      font-weight: 500; 
-    }
-    .btn-join { 
-      background: #25D366; 
-      color: #ffffff; 
-      border: none; 
-      padding: 9px 16px; 
-      border-radius: 8px; 
-      font-size: 13px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      transition: opacity 0.2s ease, transform 0.1s ease;
-    }
-    .btn-join:active { 
-      transform: scale(0.96); 
-      opacity: 0.9;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f7f9fa; color: #333; }
+    header { background: #00a884; color: white; padding: 20px 15px; text-align: center; }
+    header h1 { font-size: 26px; font-weight: bold; }
+    header p { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+    .container { max-width: 900px; margin: auto; padding: 15px; }
+
+    .top-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+    .search-box input { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; }
+    .btn-add-main { background: #25d366; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; }
+    .btn-add-main:hover { background: #1ebc59; }
+
+    .filter-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .filter-card select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
+    .btn-find { background: #00a884; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; }
+
+    .group-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+    .group-card { background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); border-top: 4px solid #00a884; display: flex; flex-direction: column; justify-content: space-between; }
+    .group-title { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 8px; }
+    .group-tags { font-size: 12px; color: #666; margin-bottom: 15px; line-height: 1.6; }
+    .btn-join { display: block; width: 100%; text-align: center; background: #00a884; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; text-decoration: none; }
+    .btn-join:hover { background: #075e54; }
+
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 15px; z-index: 999; }
+    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+    .modal-content h3 { color: #00a884; margin-bottom: 15px; }
+    .modal-content input, .modal-content select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+    .btn-cancel { background: #888; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="header">
-      <span class="badge">● Verified Global Hub</span>
-      <h1>Global Communities & Squads</h1>
-      <p>Select your favorite squad to join instant chat rooms & exclusive drops.</p>
+
+<header>
+  <h1>GroupSor</h1>
+  <p>Enjoy Unlimited Groups</p>
+</header>
+
+<div class="container">
+
+  <div class="top-actions">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Type Keywords to Search..." onkeyup="applyFilter()">
     </div>
-    
-    <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Search squad (GTA, Crypto, AI, USA...)" onkeyup="searchSquads()">
-    
-    <div class="stats-bar">
-      <span id="groupCount">Loading Squads...</span>
-      <span>🟢 Instant Access</span>
-    </div>
-    
-    <div class="groups-list" id="squadContainer"></div>
+    <button class="btn-add-main" onclick="openModal()">+ Add Whatsapp Group</button>
   </div>
 
-  <script>
-    const ADSTERRA_LINK = "https://www.effectivecpmnetwork.com/bwk3i6y31?key=6e1b96d31c0b3e0dcc81cd10c035d3dd";
+  <div class="filter-card">
+    <select id="filterCategory" onchange="applyFilter()"></select>
+    <select id="filterCountry" onchange="applyFilter()"></select>
+    <select id="filterLanguage" onchange="applyFilter()"></select>
+    <button class="btn-find" onclick="applyFilter()">Find group</button>
+  </div>
 
-    const squads = [
-      { name: "USA Gamers & Esports Elite", icon: "🇺🇸", members: "1,024 Active" },
-      { name: "UK Gaming Underground", icon: "🇬🇧", members: "980 Active" },
-      { name: "Canada Pro Gamers Club", icon: "🇨🇦", members: "890 Active" },
-      { name: "Australia Warzone & Apex", icon: "🇦🇺", members: "910 Active" },
-      { name: "Fortnite Chapter 5 US/EU", icon: "🎯", members: "1,040 Active" },
-      { name: "Call of Duty Warzone VIP", icon: "🪖", members: "990 Active" },
-      { name: "GTA 6 & GTA Online Hub", icon: "🏎️", members: "1,050 Active" },
-      { name: "Valorant Radiant Ranked EU/NA", icon: "⚔️", members: "870 Active" },
-      { name: "PlayStation 5 VIP Lounge", icon: "🎮", members: "1,010 Active" },
-      { name: "Xbox Series X Master Squad", icon: "🕹️", members: "920 Active" },
-      { name: "Nintendo Switch Players Club", icon: "🍄", members: "830 Active" },
-      { name: "Steam Deck & PC Hardware", icon: "💻", members: "960 Active" },
-      { name: "Free Fire Max Elite World", icon: "🔥", members: "1,040 Active" },
-      { name: "BGMI & PUBG Global Scrims", icon: "🥇", members: "1,020 Active" },
-      { name: "Roblox VIP Codes & Trade Hub", icon: "🧱", members: "990 Active" },
-      { name: "Minecraft Global Builders", icon: "⛏️", members: "940 Active" },
-      { name: "Overwatch 2 Competitive", icon: "⚡", members: "780 Active" },
-      { name: "Apex Legends Predators Hub", icon: "🦅", members: "890 Active" },
-      { name: "Counter-Strike 2 Global Elite", icon: "💣", members: "970 Active" },
-      { name: "League of Legends Challenger", icon: "🏆", members: "1,010 Active" },
-      { name: "EA FC 24 Ultimate Team US", icon: "⚽", members: "930 Active" },
-      { name: "NBA 2K24 Ballers Lounge", icon: "🏀", members: "860 Active" },
-      { name: "Rocket League Grand Champ", icon: "🚀", members: "810 Active" },
-      { name: "Rust Survival & Clan Wars", icon: "🛡️", members: "790 Active" },
-      { name: "Dead by Daylight Killers & Survivors", icon: "🔦", members: "820 Active" },
-      { name: "ChatGPT 4 & Prompt Engineers", icon: "🤖", members: "1,050 Active" },
-      { name: "Midjourney & AI Image Drops", icon: "🎨", members: "1,020 Active" },
-      { name: "Cybersecurity & Ethical Hackers", icon: "🔒", members: "990 Active" },
-      { name: "Full Stack Developers & Coders", icon: "👨‍💻", members: "940 Active" },
-      { name: "Python Automation & Scripts", icon: "🐍", members: "880 Active" },
-      { name: "SaaS Builders & Tech Startups", icon: "🚀", members: "910 Active" },
-      { name: "Apple Ecosystem & iOS Beta", icon: "🍏", members: "1,030 Active" },
-      { name: "Android Power Users & ROMs", icon: "🤖", members: "890 Active" },
-      { name: "DevOps, Cloud & AWS Architects", icon: "☁️", members: "760 Active" },
-      { name: "Data Science & Machine Learning", icon: "📊", members: "840 Active" },
-      { name: "UI/UX Designers Worldwide", icon: "✏️", members: "920 Active" },
-      { name: "No-Code Web Builders", icon: "⚡", members: "850 Active" },
-      { name: "WordPress & SEO Masterminds", icon: "📈", members: "980 Active" },
-      { name: "Linux SysAdmins & Kernel Club", icon: "🐧", members: "810 Active" },
-      { name: "Open Source AI Tools & GitHub", icon: "🐙", members: "970 Active" },
-      { name: "Bitcoin & Ethereum Whale Signals", icon: "🪙", members: "1,040 Active" },
-      { name: "Solana Meme Coins & Snipers", icon: "⚡", members: "1,020 Active" },
-      { name: "Forex Scalping & Daily Signals", icon: "📉", members: "980 Active" },
-      { name: "WallStreetBets USA Stocks", icon: "🐂", members: "1,050 Active" },
-      { name: "Binance VIP Futures Traders", icon: "📊", members: "990 Active" },
-      { name: "Crypto Airdrops & Testnets", icon: "🪂", members: "1,030 Active" },
-      { name: "NFT Collectors & Alpha Chat", icon: "💎", members: "840 Active" },
-      { name: "DeFi Yield Farmers & Staking", icon: "🌾", members: "790 Active" },
-      { name: "Day Trading Options (US Market)", icon: "💵", members: "920 Active" },
-      { name: "Gold & Commodity Investors", icon: "🧈", members: "870 Active" },
-      { name: "E-Commerce & Shopify Masters", icon: "🛍️", members: "1,010 Active" },
-      { name: "Amazon FBA Sellers Lounge", icon: "📦", members: "950 Active" },
-      { name: "High Ticket Affiliate Marketers", icon: "💰", members: "980 Active" },
-      { name: "Freelance Copywriters & Ghostwriters", icon: "✍️", members: "860 Active" },
-      { name: "Digital Marketing Agency (SMMA)", icon: "📣", members: "920 Active" },
-      { name: "Print On Demand Creators", icon: "👕", members: "790 Active" },
-      { name: "Remote Tech Jobs (USA / EU)", icon: "🌐", members: "1,030 Active" },
-      { name: "Upwork & Fiverr Top Rated Club", icon: "💼", members: "890 Active" },
-      { name: "Real Estate & Rental Arbitrage", icon: "🏠", members: "840 Active" },
-      { name: "CPA Marketing & Native Ads", icon: "🎯", members: "910 Active" },
-      { name: "YouTube Automation & Faceless Channels", icon: "▶️", members: "1,050 Active" },
-      { name: "TikTok & Reels Growth Lab", icon: "📱", members: "1,040 Active" },
-      { name: "Video Editors (Premiere & After Effects)", icon: "🎬", members: "980 Active" },
-      { name: "CapCut & Mobile Video Masters", icon: "✂️", members: "1,010 Active" },
-      { name: "Twitch & Kick Streamers Lounge", icon: "🟣", members: "940 Active" },
-      { name: "Podcasters & Audio Engineers", icon: "🎙️", members: "820 Active" },
-      { name: "Thumbnail Designers Guild", icon: "🖼️", members: "890 Active" },
-      { name: "Music Producers & Beat Makers", icon: "🎧", members: "960 Active" },
-      { name: "Photographers & Lightroom Presets", icon: "📷", members: "910 Active" },
-      { name: "3D Animation & Blender Club", icon: "🧊", members: "870 Active" },
-      { name: "Anime Global Fans & Discussions", icon: "⛩️", members: "1,050 Active" },
-      { name: "One Piece & Shonen Jump Weekly", icon: "🏴‍☠️", members: "1,020 Active" },
-      { name: "Jujutsu Kaisen & Demon Slayer Hub", icon: "⚔️", members: "990 Active" },
-      { name: "Manga Readers & Raw Scans", icon: "📖", members: "880 Active" },
-      { name: "Marvel & DC Cinematic Universe", icon: "🦸", members: "970 Active" },
-      { name: "Netflix & HBO Series Buffs", icon: "🍿", members: "1,010 Active" },
-      { name: "Sci-Fi & Fantasy Enthusiasts", icon: "🌌", members: "840 Active" },
-      { name: "K-Drama & K-Pop Worldwide", icon: "🎵", members: "1,030 Active" },
-      { name: "Cosplay & Comic-Con Gatherings", icon: "🎭", members: "820 Active" },
-      { name: "Retro Gaming & 90s Nostalgia", icon: "🕹️", members: "860 Active" },
-      { name: "Sneakerheads & Streetwear Drops", icon: "👟", members: "1,010 Active" },
-      { name: "Supercars & Exotic Car Meets", icon: "🏎️", members: "980 Active" },
-      { name: "Gym Rats, Calisthenics & Fitness", icon: "🏋️", members: "1,040 Active" },
-      { name: "Biohacking & Nootropics Lab", icon: "🧬", members: "830 Active" },
-      { name: "Digital Nomads & World Travelers", icon: "✈️", members: "1,020 Active" },
-      { name: "Books, Philosophy & High IQ Club", icon: "📚", members: "870 Active" },
-      { name: "Specialty Coffee & Barista Corner", icon: "☕", members: "790 Active" },
-      { name: "Home Gym & Bodybuilding Masters", icon: "💪", members: "910 Active" },
-      { name: "Mechanical Keyboards & Desk Setups", icon: "⌨️", members: "850 Active" },
-      { name: "Minimalism & Productivity Hacks", icon: "⏱️", members: "940 Active" },
-      { name: "London Expats & Creators", icon: "🇬🇧", members: "930 Active" },
-      { name: "New York Tech & Media Meetup", icon: "🗽", members: "1,010 Active" },
-      { name: "California Silicon Valley Startups", icon: "🌉", members: "990 Active" },
-      { name: "Toronto & Vancouver Gaming Circle", icon: "🇨🇦", members: "890 Active" },
-      { name: "Sydney & Melbourne Young Pros", icon: "🇦🇺", members: "860 Active" },
-      { name: "Berlin & Amsterdam Tech Scene", icon: "🇪🇺", members: "920 Active" },
-      { name: "Dubai VIP Network & Business", icon: "🇦🇪", members: "1,040 Active" },
-      { name: "Tokyo Gaming & Digital Art Hub", icon: "🇯🇵", members: "970 Active" },
-      { name: "Singapore Fintech & Web3 Network", icon: "🇸🇬", members: "940 Active" },
-      { name: "Nordic Gamers & Developers", icon: "❄️", members: "830 Active" }
-    ];
+  <div class="group-list" id="groupGrid"></div>
 
-    const container = document.getElementById("squadContainer");
-    const countDisplay = document.getElementById("groupCount");
+</div>
 
-    function renderSquads(list) {
-      container.innerHTML = "";
-      countDisplay.textContent = `Showing ${list.length} Squads`;
-      list.forEach((s) => {
-        const card = document.createElement("div");
-        card.className = "group-card";
-        card.innerHTML = `
-          <div class="group-left">
-            <div class="group-icon">${s.icon}</div>
-            <div>
-              <div class="group-title">${s.name}</div>
-              <div class="group-meta">● ${s.members}</div>
-            </div>
+<!-- ADD GROUP MODAL -->
+<div class="modal" id="addModal">
+  <div class="modal-content">
+    <h3>Add WhatsApp / Telegram Group</h3>
+    <input type="text" id="inLink" placeholder="Enter Group Invite Link...">
+    <input type="text" id="inName" placeholder="Enter Group Name...">
+    <select id="inCat"></select>
+    <select id="inCountry"></select>
+    <select id="inLang"></select>
+    <input type="text" id="inTags" placeholder="Enter Tags (Optional, separated by comma)">
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-add-main" onclick="submitGroup()">Submit Group</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ADSTERRA_DIRECT_LINK = "https://www.effectivecpmnetwork.com/bwk3i6y31?key=6e1b96d31c0b3e0dcc81cd10c035d3dd";
+
+  const categories = [
+    "Adult/18+/Hot", "Art/Design/Photography", "Auto/Vehicle", "Business/Advertising/Marketing",
+    "Comedy/Funny", "Dating/Flirting/Chatting", "Education/School", "Entertainment/Masti",
+    "Family/Relationships", "Fan Club/Celebrities", "Fashion/Style/Clothing", "Film/Animation",
+    "Food/Drinks", "Gaming/Apps", "Health/Beauty/Fitness", "Jobs/Career", "Money/Earning",
+    "Music/Audio/Songs", "News/Magazines/Politics", "Pets/Animals/Nature", "Roleplay/Comics",
+    "Science/Technology", "Shopping/Buy/Sell", "Social/Friendship/Community", "Spiritual/Devotional",
+    "Sports/Games", "Thoughts/Quotes/Jokes", "Travel/Local/Place"
+  ];
+
+  const countries = [
+    "Algeria", "Argentina", "Australia", "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus",
+    "Belgium", "Bolivia", "Bosnia and Herzegovina", "Brazil", "Bulgaria", "Canada", "Chile", "China",
+    "Colombia", "Croatia", "Czechia", "Denmark", "Egypt", "Estonia", "Ethiopia", "Finland", "France",
+    "Georgia", "Germany", "Ghana", "Greece", "Hong Kong", "Iceland", "India", "Indonesia", "Iraq",
+    "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia",
+    "Lebanon", "Libya", "Lithuania", "Luxembourg", "Macedonia", "Malawi", "Malaysia", "Mexico",
+    "Montenegro", "Morocco", "Mozambique", "Nepal", "Netherlands", "New Zealand", "Nigeria", "Norway",
+    "Oman", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar",
+    "Romania", "Russia", "Saudi Arabia", "Senegal", "Serbia", "Singapore", "Slovakia", "Slovenia",
+    "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Tanzania",
+    "Thailand", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
+    "United States", "Venezuela", "Vietnam", "Yemen", "Zimbabwe", "Worldwide / Global"
+  ];
+
+  const languages = [
+    "Afrikaans", "Albanian", "Amharic", "Arabic", "Armenian", "Azerbaijani", "Bangla", "Basque",
+    "Belarusian", "Bosnian", "Bulgarian", "Catalan", "Chinese", "Croatian", "Czech", "Danish",
+    "Dutch", "English", "Estonian", "Filipino", "Finnish", "French", "Galician", "Georgian",
+    "German", "Greek", "Gujarati", "Hebrew", "Hindi", "Hungarian", "Icelandic", "Indonesian",
+    "Italian", "Japanese", "Kannada", "Kazakh", "Korean", "Kurdish", "Latvian", "Lithuanian",
+    "Malay", "Malayalam", "Marathi", "Nepali", "Norwegian", "Pashto", "Persian", "Polish",
+    "Portuguese", "Punjabi", "Romanian", "Russian", "Serbian", "Sindhi", "Sinhala", "Slovak",
+    "Slovenian", "Somali", "Spanish", "Swahili", "Swedish", "Tamil", "Telugu", "Thai",
+    "Turkish", "Ukrainian", "Urdu", "Uzbek", "Vietnamese"
+  ];
+
+  function populateDropdowns() {
+    const fCat = document.getElementById('filterCategory');
+    const fCount = document.getElementById('filterCountry');
+    const fLang = document.getElementById('filterLanguage');
+    const inCat = document.getElementById('inCat');
+    const inCount = document.getElementById('inCountry');
+    const inLang = document.getElementById('inLang');
+
+    fCat.innerHTML = '<option value="All">Select Group Category</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    fCount.innerHTML = '<option value="All">Select Group Country</option>' + countries.map(c => `<option value="${c}">${c}</option>`).join('');
+    fLang.innerHTML = '<option value="All">Select Group Language</option>' + languages.map(l => `<option value="${l}">${l}</option>`).join('');
+
+    inCat.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    inCount.innerHTML = countries.map(c => `<option value="${c}">${c}</option>`).join('');
+    inLang.innerHTML = languages.map(l => `<option value="${l}">${l}</option>`).join('');
+  }
+
+  const defaultGroups = [
+    { name: "Fortnite USA & EU Squads", cat: "Gaming/Apps", country: "United States", lang: "English", link: "https://chat.whatsapp.com/" },
+    { name: "Crypto & Forex Signals Daily", cat: "Money/Earning", country: "United Kingdom", lang: "English", link: "https://t.me/" },
+    { name: "Bollywood & Hollywood Masti", cat: "Entertainment/Masti", country: "India", lang: "Hindi", link: "https://chat.whatsapp.com/" },
+    { name: "Global Memes & Jokes Club", cat: "Thoughts/Quotes/Jokes", country: "Worldwide / Global", lang: "English", link: "https://t.me/" }
+  ];
+
+  let groups = JSON.parse(localStorage.getItem('groupsor_live_db')) || defaultGroups;
+
+  function renderList(list) {
+    const container = document.getElementById('groupGrid');
+    container.innerHTML = '';
+    if(list.length === 0) {
+      container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 20px;">No groups found for this selection.</p>';
+      return;
+    }
+    list.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'group-card';
+      card.innerHTML = `
+        <div>
+          <div class="group-title">${item.name}</div>
+          <div class="group-tags">
+            📁 Category: <b>${item.cat}</b><br>
+            🌍 Country: <b>${item.country}</b><br>
+            🗣️ Language: <b>${item.lang}</b>
           </div>
-          <button class="btn-join" onclick="openAdsterra()">Join ➔</button>
-        `;
-        container.appendChild(card);
-      });
+        </div>
+        <button class="btn-join" onclick="handleJoin('${item.link}')">Join Group</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function handleJoin(targetLink) {
+    window.open(ADSTERRA_DIRECT_LINK, '_blank');
+    setTimeout(() => {
+      window.location.href = targetLink;
+    }, 400);
+  }
+
+  function applyFilter() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const cat = document.getElementById('filterCategory').value;
+    const country = document.getElementById('filterCountry').value;
+    const lang = document.getElementById('filterLanguage').value;
+
+    const filtered = groups.filter(g => {
+      const matchSearch = g.name.toLowerCase().includes(search);
+      const matchCat = (cat === "All" || g.cat === cat);
+      const matchCountry = (country === "All" || g.country === country);
+      const matchLang = (lang === "All" || g.lang === lang);
+      return matchSearch && matchCat && matchCountry && matchLang;
+    });
+
+    renderList(filtered);
+  }
+
+  function openModal() { document.getElementById('addModal').style.display = 'flex'; }
+  function closeModal() { document.getElementById('addModal').style.display = 'none'; }
+
+  function submitGroup() {
+    const link = document.getElementById('inLink').value.trim();
+    const name = document.getElementById('inName').value.trim();
+    const cat = document.getElementById('inCat').value;
+    const country = document.getElementById('inCountry').value;
+    const lang = document.getElementById('inLang').value;
+
+    if(!link || !name) {
+      alert("Please fill Group Link and Name!");
+      return;
     }
 
-    function openAdsterra() {
-      window.location.href = ADSTERRA_LINK;
-    }
+    groups.unshift({ name, cat, country, lang, link });
+    localStorage.setItem('groupsor_live_db', JSON.stringify(groups));
+    renderList(groups);
+    closeModal();
+    alert("Group added successfully!");
+  }
 
-    function searchSquads() {
-      const q = document.getElementById("searchInput").value.toLowerCase();
-      const filtered = squads.filter(s => s.name.toLowerCase().includes(q));
-      renderSquads(filtered);
-    }
+  populateDropdowns();
+  renderList(groups);
+</script>
 
-    renderSquads(squads);
-  </script>
 </body>
 </html>
