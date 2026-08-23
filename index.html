@@ -1,83 +1,111 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="NCQ9JGMsWUWIDwu9jbDUrViYH8y1s9IpUo3nNlCLTy0" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WorldGroups ind - Enjoy Unlimited Groups</title>
+  <title>PinkSphere - Discover & Join Global Groups</title>
+  <meta name="description" content="Discover direct WhatsApp and Telegram group links across top categories and languages worldwide.">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f7f9fa; color: #333; }
-    header { background: #00a884; color: white; padding: 20px 15px; text-align: center; }
-    header h1 { font-size: 26px; font-weight: bold; }
-    header p { font-size: 14px; opacity: 0.9; margin-top: 4px; }
-    .container { max-width: 900px; margin: auto; padding: 15px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background-color: #fff0f5; color: #2d0c21; }
+    
+    /* Header */
+    header { background: linear-gradient(135deg, #ff1493, #e00070); color: white; padding: 30px 15px; text-align: center; box-shadow: 0 4px 15px rgba(255, 20, 147, 0.25); }
+    header h1 { font-size: 30px; font-weight: 900; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+    header p { font-size: 14px; opacity: 0.95; margin-top: 6px; font-weight: 500; }
+    
+    .container { max-width: 950px; margin: auto; padding: 20px 15px; }
 
-    .top-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-    .search-box input { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; }
-    .btn-add-main { background: #25d366; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; }
-    .btn-add-main:hover { background: #1ebc59; }
+    /* Top Controls */
+    .top-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .search-box input { width: 100%; padding: 14px 16px; background: white; border: 2px solid #ffb6c1; border-radius: 12px; font-size: 15px; outline: none; color: #333; transition: 0.2s; }
+    .search-box input:focus { border-color: #ff1493; box-shadow: 0 0 8px rgba(255, 20, 147, 0.2); }
+    
+    .btn-add-main { background: linear-gradient(135deg, #ff007f, #d8006b); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(255, 0, 127, 0.3); transition: 0.2s; }
+    .btn-add-main:hover { transform: translateY(-1px); opacity: 0.95; }
 
-    .filter-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-    .filter-card select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; background: #fff; }
-    .btn-find { background: #00a884; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; }
+    /* Filter Box */
+    .filter-card { background: white; padding: 18px; border-radius: 14px; border: 1.5px solid #ffccd5; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.08); margin-bottom: 25px; display: flex; flex-direction: column; gap: 12px; }
+    .filter-card select { width: 100%; padding: 12px; border: 1.5px solid #ffaec0; border-radius: 10px; font-size: 14px; outline: none; background: #fffafd; color: #4a1532; font-weight: 500; }
+    .filter-card select:focus { border-color: #ff1493; }
+    .btn-find { background: linear-gradient(135deg, #ff69b4, #ff1493); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; }
 
-    .group-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-    .group-card { background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); border-top: 4px solid #00a884; display: flex; flex-direction: column; justify-content: space-between; }
-    .group-title { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 8px; }
-    .group-tags { font-size: 12px; color: #666; margin-bottom: 15px; line-height: 1.6; }
-    .btn-join { display: block; width: 100%; text-align: center; background: #00a884; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; text-decoration: none; }
-    .btn-join:hover { background: #075e54; }
+    /* Cards */
+    .group-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .group-card { background: white; border-radius: 14px; padding: 18px; border: 1.5px solid #ffd1dc; box-shadow: 0 4px 12px rgba(255, 182, 193, 0.25); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+    .group-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #ff69b4, #ff1493); }
+    .group-title { font-size: 17px; font-weight: 700; color: #b30059; margin-bottom: 10px; }
+    .group-tags { font-size: 13px; color: #6e2c4c; margin-bottom: 18px; line-height: 1.6; }
+    
+    .btn-join { display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #ff1493, #c70066); color: white; padding: 11px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 3px 8px rgba(255, 20, 147, 0.3); transition: 0.2s; }
+    .btn-join:hover { opacity: 0.9; }
 
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 15px; z-index: 999; }
-    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
-    .modal-content h3 { color: #00a884; margin-bottom: 15px; }
-    .modal-content input, .modal-content select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
-    .btn-cancel { background: #888; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
+    /* Footer */
+    footer { text-align: center; padding: 30px 15px; font-size: 12px; color: #a26081; border-top: 1px solid #ffd1dc; margin-top: 40px; }
+
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(74, 21, 50, 0.6); backdrop-filter: blur(3px); align-items: center; justify-content: center; padding: 15px; z-index: 999; }
+    .modal-content { background: white; padding: 25px; border-radius: 16px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; border: 2px solid #ffb6c1; }
+    .modal-content h3 { color: #d8006b; margin-bottom: 15px; font-size: 20px; }
+    .modal-content label { display: block; font-size: 13px; font-weight: 600; color: #80134b; margin-bottom: 5px; }
+    .modal-content input, .modal-content select { width: 100%; padding: 12px; margin-bottom: 14px; border: 1.5px solid #ffccd5; border-radius: 8px; font-size: 14px; background: #fffafd; outline: none; }
+    .modal-content input:focus, .modal-content select:focus { border-color: #ff1493; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px; }
+    .btn-cancel { background: #e0d0d8; color: #4a1532; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>WorldGroups ind</h1>
-  <p>Enjoy Unlimited Groups</p>
+  <h1>PinkSphere</h1>
+  <p>Global WhatsApp & Telegram Group Directory</p>
 </header>
 
 <div class="container">
 
   <div class="top-actions">
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Type Keywords to Search..." onkeyup="applyFilter()">
+      <input type="text" id="searchInput" placeholder="Search by category, country or language..." onkeyup="applyFilter()">
     </div>
-    <button class="btn-add-main" onclick="openModal()">+ Add Whatsapp Group</button>
+    <button class="btn-add-main" onclick="openModal()">+ Add Your Group Link</button>
   </div>
 
   <div class="filter-card">
     <select id="filterCategory" onchange="applyFilter()"></select>
     <select id="filterCountry" onchange="applyFilter()"></select>
     <select id="filterLanguage" onchange="applyFilter()"></select>
-    <button class="btn-find" onclick="applyFilter()">Find group</button>
+    <button class="btn-find" onclick="applyFilter()">Search Groups</button>
   </div>
 
   <div class="group-list" id="groupGrid"></div>
 
 </div>
 
-<!-- ADD GROUP MODAL -->
+<footer>
+  <p>© 2026 PinkSphere Network. All rights reserved.</p>
+  <p style="margin-top: 5px;">Independent public community directory. Not affiliated with WhatsApp LLC or Telegram FZ-LLC.</p>
+</footer>
+
+<!-- ADD GROUP MODAL (NO GROUP NAME ASKED) -->
 <div class="modal" id="addModal">
   <div class="modal-content">
-    <h3>Add WhatsApp / Telegram Group</h3>
-    <input type="text" id="inLink" placeholder="Enter Group Invite Link...">
-    <input type="text" id="inName" placeholder="Enter Group Name...">
+    <h3>Add Group Link</h3>
+    
+    <label>Group Invite Link:</label>
+    <input type="text" id="inLink" placeholder="https://chat.whatsapp.com/... or https://t.me/...">
+    
+    <label>Select Category:</label>
     <select id="inCat"></select>
+    
+    <label>Select Country:</label>
     <select id="inCountry"></select>
+    
+    <label>Select Language:</label>
     <select id="inLang"></select>
-    <input type="text" id="inTags" placeholder="Enter Tags (Optional, separated by comma)">
 
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-add-main" onclick="submitGroup()">Submit Group</button>
+      <button class="btn-add-main" style="padding: 10px 20px;" onclick="submitGroup()">Add Group</button>
     </div>
   </div>
 </div>
@@ -130,9 +158,9 @@
     const inCount = document.getElementById('inCountry');
     const inLang = document.getElementById('inLang');
 
-    fCat.innerHTML = '<option value="All">Select Group Category</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
-    fCount.innerHTML = '<option value="All">Select Group Country</option>' + countries.map(c => `<option value="${c}">${c}</option>`).join('');
-    fLang.innerHTML = '<option value="All">Select Group Language</option>' + languages.map(l => `<option value="${l}">${l}</option>`).join('');
+    fCat.innerHTML = '<option value="All">All Categories</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    fCount.innerHTML = '<option value="All">All Countries</option>' + countries.map(c => `<option value="${c}">${c}</option>`).join('');
+    fLang.innerHTML = '<option value="All">All Languages</option>' + languages.map(l => `<option value="${l}">${l}</option>`).join('');
 
     inCat.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
     inCount.innerHTML = countries.map(c => `<option value="${c}">${c}</option>`).join('');
@@ -140,31 +168,33 @@
   }
 
   const defaultGroups = [
-    { name: "Fortnite USA & EU Squads", cat: "Gaming/Apps", country: "United States", lang: "English", link: "https://chat.whatsapp.com/" },
-    { name: "Crypto & Forex Signals Daily", cat: "Money/Earning", country: "United Kingdom", lang: "English", link: "https://t.me/" },
-    { name: "Bollywood & Hollywood Masti", cat: "Entertainment/Masti", country: "India", lang: "Hindi", link: "https://chat.whatsapp.com/" },
-    { name: "Global Memes & Jokes Club", cat: "Thoughts/Quotes/Jokes", country: "Worldwide / Global", lang: "English", link: "https://t.me/" }
+    { cat: "Gaming/Apps", country: "United States", lang: "English", link: "https://chat.whatsapp.com/" },
+    { cat: "Money/Earning", country: "United Kingdom", lang: "English", link: "https://t.me/" },
+    { cat: "Entertainment/Masti", country: "India", lang: "Punjabi", link: "https://chat.whatsapp.com/" },
+    { cat: "Science/Technology", country: "Worldwide / Global", lang: "English", link: "https://t.me/" }
   ];
 
-  let groups = JSON.parse(localStorage.getItem('groupsor_live_db')) || defaultGroups;
+  let groups = JSON.parse(localStorage.getItem('pinksphere_db')) || defaultGroups;
 
   function renderList(list) {
     const container = document.getElementById('groupGrid');
     container.innerHTML = '';
     if(list.length === 0) {
-      container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 20px;">No groups found for this selection.</p>';
+      container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 25px; color:#a26081; font-weight:bold;">No groups found for this selection.</p>';
       return;
     }
     list.forEach(item => {
       const card = document.createElement('div');
       card.className = 'group-card';
+      // Automatically generates a clean title from Category & Country
+      const displayTitle = `${item.country} • ${item.cat}`;
       card.innerHTML = `
         <div>
-          <div class="group-title">${item.name}</div>
+          <div class="group-title">${displayTitle}</div>
           <div class="group-tags">
-            📁 Category: <b>${item.cat}</b><br>
-            🌍 Country: <b>${item.country}</b><br>
-            🗣️ Language: <b>${item.lang}</b>
+            🌸 <b>Category:</b> ${item.cat}<br>
+            🌍 <b>Country:</b> ${item.country}<br>
+            🗣️ <b>Language:</b> ${item.lang}
           </div>
         </div>
         <button class="btn-join" onclick="handleJoin('${item.link}')">Join Group</button>
@@ -187,7 +217,8 @@
     const lang = document.getElementById('filterLanguage').value;
 
     const filtered = groups.filter(g => {
-      const matchSearch = g.name.toLowerCase().includes(search);
+      const textToSearch = `${g.cat} ${g.country} ${g.lang}`.toLowerCase();
+      const matchSearch = textToSearch.includes(search);
       const matchCat = (cat === "All" || g.cat === cat);
       const matchCountry = (country === "All" || g.country === country);
       const matchLang = (lang === "All" || g.lang === lang);
@@ -202,19 +233,19 @@
 
   function submitGroup() {
     const link = document.getElementById('inLink').value.trim();
-    const name = document.getElementById('inName').value.trim();
     const cat = document.getElementById('inCat').value;
     const country = document.getElementById('inCountry').value;
     const lang = document.getElementById('inLang').value;
 
-    if(!link || !name) {
-      alert("Please fill Group Link and Name!");
+    if(!link) {
+      alert("Please paste your WhatsApp or Telegram invite link!");
       return;
     }
 
-    groups.unshift({ name, cat, country, lang, link });
-    localStorage.setItem('groupsor_live_db', JSON.stringify(groups));
+    groups.unshift({ cat, country, lang, link });
+    localStorage.setItem('pinksphere_db', JSON.stringify(groups));
     renderList(groups);
+    document.getElementById('inLink').value = '';
     closeModal();
     alert("Group added successfully!");
   }
