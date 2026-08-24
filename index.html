@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PinkSphere - Discover & Join WhatsApp Groups</title>
   <meta name="description" content="Discover direct WhatsApp group links across top categories and languages worldwide.">
+  
+  <!-- ADSTERRA SOCIAL BAR AD SCRIPT -->
+  <script src="https://pl31003628.profitableratecpmnetwork.com/85/4c/9b/854c9b96d885abc1a70ca7aa7c7af816.js"></script>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
     body { background-color: #fff0f5; color: #2d0c21; }
@@ -17,12 +21,25 @@
     .container { max-width: 950px; margin: auto; padding: 20px 15px; }
 
     /* Top Actions */
-    .top-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .top-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
     .search-box input { width: 100%; padding: 14px 16px; background: white; border: 2px solid #ffb6c1; border-radius: 12px; font-size: 15px; outline: none; color: #333; transition: 0.2s; }
     .search-box input:focus { border-color: #ff1493; box-shadow: 0 0 8px rgba(255, 20, 147, 0.2); }
     
     .btn-add-main { background: linear-gradient(135deg, #ff007f, #d8006b); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(255, 0, 127, 0.3); transition: 0.2s; }
     .btn-add-main:hover { opacity: 0.95; transform: translateY(-1px); }
+
+    /* Adsterra Banner Container */
+    .ad-banner-box {
+      margin: 15px auto 20px auto;
+      text-align: center;
+      min-height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      padding: 5px;
+    }
 
     /* Filter Box */
     .filter-card { background: white; padding: 18px; border-radius: 14px; border: 1.5px solid #ffccd5; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.08); margin-bottom: 25px; display: flex; flex-direction: column; gap: 12px; }
@@ -41,7 +58,7 @@
     .btn-join:hover { opacity: 0.9; }
 
     /* Footer */
-    footer { text-align: center; padding: 30px 15px; font-size: 12px; color: #a26081; border-top: 1px solid #ffd1dc; margin-top: 40px; }
+    footer { text-align: center; padding: 30px 15px 70px 15px; font-size: 12px; color: #a26081; border-top: 1px solid #ffd1dc; margin-top: 40px; }
     footer a { color: #ff1493; text-decoration: none; font-weight: bold; }
 
     /* Modal Form */
@@ -71,6 +88,22 @@
     <button class="btn-add-main" onclick="openModal()">+ Add WhatsApp Group Link</button>
   </div>
 
+  <!-- LIVE ADSTERRA 300x250 BANNER AD -->
+  <div class="ad-banner-box">
+    <div>
+      <script>
+        atOptions = {
+          'key' : 'faf82f0cfce7fb8b734c0e23e96c8ef3',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highrevenueformat.com/faf82f0cfce7fb8b734c0e23e96c8ef3/invoke.js"></script>
+    </div>
+  </div>
+
   <div class="filter-card">
     <select id="filterCategory" onchange="applyFilter()"></select>
     <select id="filterCountry" onchange="applyFilter()"></select>
@@ -88,7 +121,7 @@
   <p style="margin-top: 4px;">To request link removal or report an issue: <a href="mailto:contact.pinksphere@gmail.com">Report / Contact</a></p>
 </footer>
 
-<!-- ADD GROUP MODAL (ONLY WHATSAPP) -->
+<!-- ADD GROUP MODAL -->
 <div class="modal" id="addModal">
   <div class="modal-content">
     <h3>Add WhatsApp Group</h3>
@@ -255,7 +288,6 @@
 
   async function submitGroup() {
     const now = Date.now();
-    // Anti-spam cooldown (20s)
     if (now - lastSubmissionTime < 20000) {
       alert("Please wait a few seconds before submitting another link.");
       return;
@@ -266,7 +298,6 @@
     const country = document.getElementById('inCountry').value;
     const lang = document.getElementById('inLang').value;
 
-    // Strict WhatsApp Link Validation
     const isWhatsAppUrl = /^(https?:\/\/)?chat\.whatsapp\.com\/[a-zA-Z0-9_\-]+/i.test(link);
     if(!isWhatsAppUrl) {
       alert("Invalid link! Only official WhatsApp group invite links (chat.whatsapp.com/...) are accepted.");
