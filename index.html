@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pink Adda - Join & Share Unlimited WhatsApp Groups</title>
-  <meta name="description" content="Pink Adda - Discover and join active WhatsApp group links across top categories and countries worldwide.">
+  <meta name="description" content="Pink Adda - Discover and join active WhatsApp group links across top categories in India.">
   
+  <!-- ADSTERRA SOCIAL BAR AD SCRIPT -->
   <script src="https://pl31003628.profitableratecpmnetwork.com/85/4c/9b/854c9b96d885abc1a70ca7aa7c7af816.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
     body { background-color: #fff0f5; color: #2d0c21; }
     
-    /* Header with Professional Logo */
+    /* Header with Logo */
     header { 
       background: linear-gradient(135deg, #ff1493, #d8006b); 
       color: white; 
@@ -127,18 +128,19 @@
     </div>
     <h1>Pink Adda</h1>
   </div>
-  <p>Join & Share Unlimited WhatsApp Groups Worldwide</p>
+  <p>Join & Share Unlimited WhatsApp Groups in India</p>
 </header>
 
 <div class="container">
 
   <div class="top-actions">
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search WhatsApp groups by category, country or language..." onkeyup="applyFilter()">
+      <input type="text" id="searchInput" placeholder="Search WhatsApp groups by category..." onkeyup="applyFilter()">
     </div>
     <button class="btn-add-main" onclick="openModal()">+ Add WhatsApp Group Link</button>
   </div>
 
+  <!-- LIVE ADSTERRA 300x250 BANNER AD -->
   <div class="ad-banner-box">
     <div>
       <script>
@@ -171,6 +173,7 @@
   <p style="margin-top: 4px;">To request link removal or report an issue: <a href="mailto:contact.pinkadda@gmail.com">Report / Contact</a></p>
 </footer>
 
+<!-- ADD GROUP MODAL -->
 <div class="modal" id="addModal">
   <div class="modal-content">
     <h3>Add WhatsApp Group</h3>
@@ -208,32 +211,54 @@
     "Sports/Games", "Thoughts/Quotes/Jokes", "Travel/Local/Place"
   ];
 
-  const countries = [
-    "Algeria", "Argentina", "Australia", "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus",
-    "Belgium", "Bolivia", "Bosnia and Herzegovina", "Brazil", "Bulgaria", "Canada", "Chile", "China",
-    "Colombia", "Croatia", "Czechia", "Denmark", "Egypt", "Estonia", "Ethiopia", "Finland", "France",
-    "Georgia", "Germany", "Ghana", "Greece", "Hong Kong", "Iceland", "India", "Indonesia", "Iraq",
-    "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia",
-    "Lebanon", "Libya", "Lithuania", "Luxembourg", "Macedonia", "Malawi", "Malaysia", "Mexico",
-    "Montenegro", "Morocco", "Mozambique", "Nepal", "Netherlands", "New Zealand", "Nigeria", "Norway",
-    "Oman", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar",
-    "Romania", "Russia", "Saudi Arabia", "Senegal", "Serbia", "Singapore", "Slovakia", "Slovenia",
-    "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Tanzania",
-    "Thailand", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
-    "United States", "Venezuela", "Vietnam", "Yemen", "Zimbabwe", "Worldwide / Global"
-  ];
+  const countries = ["India", "Worldwide / Global", "United States", "United Kingdom", "Canada", "Australia", "United Arab Emirates", "Saudi Arabia", "Pakistan", "Bangladesh"];
+  const languages = ["English", "Hindi", "Punjabi", "Urdu", "Bangla", "Tamil", "Telugu", "Marathi", "Gujarati", "Spanish", "Arabic"];
 
-  const languages = [
-    "Afrikaans", "Albanian", "Amharic", "Arabic", "Armenian", "Azerbaijani", "Bangla", "Basque",
-    "Belarusian", "Bosnian", "Bulgarian", "Catalan", "Chinese", "Croatian", "Czech", "Danish",
-    "Dutch", "English", "Estonian", "Filipino", "Finnish", "French", "Galician", "Georgian",
-    "German", "Greek", "Gujarati", "Hebrew", "Hindi", "Hungarian", "Icelandic", "Indonesian",
-    "Italian", "Japanese", "Kannada", "Kazakh", "Korean", "Kurdish", "Latvian", "Lithuanian",
-    "Malay", "Malayalam", "Marathi", "Nepali", "Norwegian", "Pashto", "Persian", "Polish",
-    "Portuguese", "Punjabi", "Romanian", "Russian", "Serbian", "Sindhi", "Sinhala", "Slovak",
-    "Slovenian", "Somali", "Spanish", "Swahili", "Swedish", "Tamil", "Telugu", "Thai",
-    "Turkish", "Ukrainian", "Urdu", "Uzbek", "Vietnamese"
-  ];
+  // 100+ Pre-populated Groups covering all categories (Country: India, Language: English)
+  const default100Groups = [];
+  const titlesPerCat = {
+    "Adult/18+/Hot": ["Midnight Secret Chat", "Desi Hot Singles Club", "Late Night Gossip", "Adult Fun Zone India"],
+    "Art/Design/Photography": ["Indian Photographers Hub", "Graphic & UI/UX Designers", "Digital Canvas & Sketch", "Visual Artists India"],
+    "Auto/Vehicle": ["Superbikes & Cars India", "Automobile Modifications", "Bullet & Riders Club", "Car Tuning & Deals"],
+    "Business/Advertising/Marketing": ["Digital Marketers India", "Startup Founders Network", "B2B Business Leads", "Affiliate Marketing Pro"],
+    "Comedy/Funny": ["Non-Stop Meme Adda", "Desi Standup Comedy Fans", "Daily Funny Video Clips", "Ultimate Joke Station"],
+    "Dating/Flirting/Chatting": ["All India Friendship Adda", "Cute Singles Meet", "Online Flirt & Romance", "Soulmates Match Hub"],
+    "Education/School": ["Govt Job Prep (SSC/UPSC)", "CBSE & ICSE Students Club", "Free PDF Study Material", "Coding & Python Learning"],
+    "Entertainment/Masti": ["Bollywood Buzz & Masti", "Daily Entertainment Lounge", "Web Series Discussions", "Desi Party Adda"],
+    "Family/Relationships": ["Happy Family Life Tips", "Relationship & Parenting Advice", "Life Motivation & Bonding", "Heart-to-Heart Sharing"],
+    "Fan Club/Celebrities": ["Cricket Stars Fan Club", "Bollywood Heroes & Heroines", "Global Popstars Fans", "South Movie Stars Adda"],
+    "Fashion/Style/Clothing": ["Streetwear & Daily Fashion", "Indian Traditional Wear Deals", "Sneakerheads & Style", "Top Trending Outfits"],
+    "Film/Animation": ["Cinema & Hollywood Updates", "Anime & Manga India", "Film Direction & Editing", "Box Office Tracking"],
+    "Food/Drinks": ["Desi Street Food Lovers", "Home Chefs Recipe Book", "Baking & Cake Specials", "Foodies Corner India"],
+    "Gaming/Apps": ["Free Fire Max India", "BGMI Pro Esports Squad", "GTA & PC Gamers Club", "Android Mod Apps Zone"],
+    "Health/Beauty/Fitness": ["Gym Motivation & Diet", "Yoga & Daily Wellness", "Skin Care & Beauty Secrets", "Weight Loss Tips Club"],
+    "Jobs/Career": ["IT & Remote Work Alerts", "Private Jobs Pan India", "Resume Tips & Career Guidance", "Work From Home Vacancies"],
+    "Money/Earning": ["Online Earning Ideas 2026", "Crypto & Forex Traders", "Stock Market Intraday Calls", "Passive Income Builders"],
+    "Music/Audio/Songs": ["Punjabi Hits & Beats", "Bollywood Melody Songs", "Indie Music Creators Hub", "EDM & DJ Remix Lovers"],
+    "News/Magazines/Politics": ["Daily Breaking News India", "Current Affairs Discussion", "Tech & Global Headline News", "Political Debates Adda"],
+    "Pets/Animals/Nature": ["Dog Lovers & Pet Care", "Wild Animals & Nature Shots", "Aquarium & Fish Keepers", "Bird Care India"],
+    "Roleplay/Comics": ["Superheroes Roleplay Zone", "Marvel & DC Comic Readers", "Fantasy RP Community", "Manga Roleplay India"],
+    "Science/Technology": ["AI Tools & Future Tech", "Tech Geeks & Hacks", "Space & Astronomy Science", "Smartphone Reviews & Leaks"],
+    "Shopping/Buy/Sell": ["Amazon/Flipkart Loot Deals", "Wholesale Cloth & Gadgets", "Reselling Community India", "Best Discount Coupons"],
+    "Social/Friendship/Community": ["True Friends Forever", "All India Social Gathering", "Chill & Talk Lounge", "Open Minded Community"],
+    "Spiritual/Devotional": ["Daily Bhakti & Mantras", "Spiritual Peace & Meditation", "Gurbani & Satsang Vichar", "Positive Life Vibe"],
+    "Sports/Games": ["Indian Cricket Fan Army", "Football & Premier League", "Pro Kabaddi League Fans", "Fitness & Athletics Adda"],
+    "Thoughts/Quotes/Jokes": ["Daily Inspirational Quotes", "Deep Thoughts & Shayari", "Humour & Laughter Club", "Life Philosophy Adda"],
+    "Travel/Local/Place": ["Himachal & Goa Travellers", "Solo Backpackers India", "Road Trips & Camping", "Budget Tour Guide Hub"]
+  };
+
+  categories.forEach(cat => {
+    const list = titlesPerCat[cat] || [`${cat} Official Group`, `${cat} Community`];
+    list.forEach(title => {
+      default100Groups.push({
+        cat: cat,
+        country: "India",
+        lang: "English",
+        title: title,
+        link: "https://chat.whatsapp.com/invite/" + Math.random().toString(36).substring(2, 10)
+      });
+    });
+  });
 
   function sanitize(str) {
     return String(str).replace(/[&<>"']/g, function(m) {
@@ -265,17 +290,15 @@
       const res = await fetch(FIREBASE_DB_URL);
       const data = await res.json();
       if (data) {
-        groups = Object.values(data).reverse();
+        const userSubmitted = Object.values(data).reverse();
+        groups = [...userSubmitted, ...default100Groups];
       } else {
-        groups = [
-          { cat: "Gaming/Apps", country: "United States", lang: "English", link: "https://chat.whatsapp.com/sample1" },
-          { cat: "Money/Earning", country: "United Kingdom", lang: "English", link: "https://chat.whatsapp.com/sample2" },
-          { cat: "Entertainment/Masti", country: "India", lang: "Punjabi", link: "https://chat.whatsapp.com/sample3" }
-        ];
+        groups = [...default100Groups];
       }
       renderList(groups);
     } catch(err) {
-      console.log("Offline mode");
+      groups = [...default100Groups];
+      renderList(groups);
     }
   }
 
@@ -289,7 +312,7 @@
     list.forEach(item => {
       const card = document.createElement('div');
       card.className = 'group-card';
-      const displayTitle = sanitize(`${item.country} • ${item.cat}`);
+      const displayTitle = sanitize(item.title || `${item.country} • ${item.cat}`);
       card.innerHTML = `
         <div>
           <div class="group-title">${displayTitle}</div>
@@ -319,7 +342,7 @@
     const lang = document.getElementById('filterLanguage').value;
 
     const filtered = groups.filter(g => {
-      const textToSearch = `${g.cat} ${g.country} ${g.lang}`.toLowerCase();
+      const textToSearch = `${g.cat} ${g.country} ${g.lang} ${g.title || ''}`.toLowerCase();
       const matchSearch = textToSearch.includes(search);
       const matchCat = (cat === "All" || g.cat === cat);
       const matchCountry = (country === "All" || g.country === country);
@@ -347,14 +370,13 @@
     const country = document.getElementById('inCountry').value;
     const lang = document.getElementById('inLang').value;
 
-    // Strict WhatsApp Link Validation
     const isWhatsAppUrl = /^(https?:\/\/)?chat\.whatsapp\.com\/[a-zA-Z0-9_\-]+/i.test(link);
     if(!isWhatsAppUrl) {
       alert("Invalid link! Only official WhatsApp group invite links (chat.whatsapp.com/...) are accepted.");
       return;
     }
 
-    const newGroup = { cat, country, lang, link, timestamp: now };
+    const newGroup = { cat, country, lang, link, title: `${country} • ${cat} Official`, timestamp: now };
     
     try {
       document.getElementById('btnSubmit').innerText = "Adding...";
