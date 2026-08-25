@@ -62,7 +62,6 @@
       border-radius: 10px;
       padding: 5px;
       border: 1px solid #fbcfe8;
-      overflow: hidden;
     }
 
     /* Filters */
@@ -193,7 +192,18 @@
   <button type="button" class="btn-add-main" onclick="openAddModal()">+ Add WhatsApp Group Link</button>
 
   <div class="ad-banner-box">
-    <iframe srcdoc="<!DOCTYPE html><html><body style='margin:0;display:flex;justify-content:center;align-items:center;'><script type='text/javascript'>atOptions={'key':'faf82f0cfce7fb8b734c0e23e96c8ef3','format':'iframe','height':250,'width':300,'params':{}};</script><script type='text/javascript' src='https://www.highrevenueformat.com/faf82f0cfce7fb8b734c0e23e96c8ef3/invoke.js'></script></body></html>" width="300" height="250" style="border:none;" scrolling="no"></iframe>
+    <div>
+      <script type="text/javascript">
+        atOptions = {
+          'key' : 'faf82f0cfce7fb8b734c0e23e96c8ef3',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="https://www.highrevenueformat.com/faf82f0cfce7fb8b734c0e23e96c8ef3/invoke.js"></script>
+    </div>
   </div>
 
   <div class="filter-card">
@@ -236,7 +246,6 @@
   var ADSTERRA_DIRECT_LINK = "https://www.effectivecpmnetwork.com/bwk3i6y31?key=6e1b96d31c0b3e0dcc81cd10c035d3dd";
   var FIREBASE_DB_URL = "https://pinksphere-hub-default-rtdb.firebaseio.com/groups.json";
   var DEFAULT_WA_IMG = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
-  var lastSubmissionTime = 0;
 
   var categories = [
     "Adult/18+/Hot", "Art/Design/Photography", "Auto/Vehicle", "Business/Advertising/Marketing",
@@ -399,10 +408,37 @@
     document.getElementById('addModalOverlay').style.display = 'none';
   }
 
+  // 5 GROUPS PER DAY PER BROWSER LIMIT LOGIC
+  function checkDailyLimit() {
+    var today = new Date().toDateString();
+    var storedData = JSON.parse(localStorage.getItem('user_group_post_limit') || '{}');
+    
+    if (storedData.date !== today) {
+      storedData = { date: today, count: 0 };
+    }
+    
+    if (storedData.count >= 5) {
+      return false; // Limit Reached
+    }
+    return true;
+  }
+
+  function incrementLimitCount() {
+    var today = new Date().toDateString();
+    var storedData = JSON.parse(localStorage.getItem('user_group_post_limit') || '{}');
+    
+    if (storedData.date !== today) {
+      storedData = { date: today, count: 1 };
+    } else {
+      storedData.count += 1;
+    }
+    localStorage.setItem('user_group_post_limit', JSON.stringify(storedData));
+  }
+
   function submitGroup() {
-    var now = Date.now();
-    if (now - lastSubmissionTime < 10000) {
-      alert("Please wait a few seconds before submitting again.");
+    // Check Limit
+    if (!checkDailyLimit()) {
+      alert("Daily limit reached! You can only add 5 groups per day. Please clear your browser data or try tomorrow.");
       return;
     }
 
@@ -420,7 +456,7 @@
 
     document.getElementById('btnSubmit').innerText = 'Adding...';
 
-    // Auto-fetch Group Info from link
+    // Auto-fetch Group Info
     fetch('https://api.microlink.io?url=' + encodeURIComponent(link))
       .then(function(res){ return res.json(); })
       .then(function(json){
@@ -450,7 +486,7 @@
         country: country,
         lang: lang,
         link: link,
-        timestamp: now
+        timestamp: Date.now()
       };
 
       fetch(FIREBASE_DB_URL, {
@@ -458,12 +494,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGroup)
       }).then(function(){
-        lastSubmissionTime = now;
+        incrementLimitCount();
         groupsData.unshift(newGroup);
         filterGroups();
         closeAddModal();
         alert('Group added live successfully!');
       }).catch(function(){
+        incrementLimitCount();
         groupsData.unshift(newGroup);
         filterGroups();
         closeAddModal();
