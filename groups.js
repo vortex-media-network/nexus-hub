@@ -1,49 +1,44 @@
-const myWhatsAppGroups = [
-  {
-    title: "Tamil Amma Group 1",
-    link: "https://chat.whatsapp.com/DKSS5SXO5y19qOIAVcxkBZ?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  },
-  {
-    title: "Tamil Aunty Group 1",
-    link: "https://chat.whatsapp.com/CauEa4KfnPFB1l1oEt2dBF?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  },
-  {
-    title: "Tamil Amma Group 2",
-    link: "https://chat.whatsapp.com/ENmCjtoWmssKJEwq9rjPGb?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  },
-  {
-    title: "Tamil Aunty Group 2",
-    link: "https://chat.whatsapp.com/Bhfq7PdToX5IHalKjoVqsd?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  },
-  {
-    title: "Tamil Amma Chat",
-    link: "https://chat.whatsapp.com/LauiaRiXCT24I2arLOQGeo?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  },
-  {
-    title: "Tamil Aunty Hub",
-    link: "https://chat.whatsapp.com/LegsrYsosn94ZkEJ42dwAJ?s=cl&p=a&mlu=4",
-    cat: "18+",
-    country: "India",
-    lang: "Tamil"
-  }
+const rawGroupLinks = [
+  { link: "https://chat.whatsapp.com/DKS5S5X0Sy19q0IAVcxkBZ?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/CauEa4KfmPFB1lioEt2dBF?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/ENmCjtoWmssKJEwq9rjPGb?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/Bhfq7PdToX5IHa1KjoVqsd?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/LauIaRlXCT24I2arL0Q0eo?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/LegsrYsosn94ZKEj42dWAJ?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" }
 ];
 
-// ਇਹ ਲਾਈਨ ਗਰੁੱਪਾਂ ਨੂੰ ਵੈੱਬਸਾਈਟ 'ਤੇ ਦਿਖਾਉਣ ਲਈ ਹੈ
-if (typeof groupsData !== 'undefined' && Array.isArray(myWhatsAppGroups)) {
-  groupsData = myWhatsAppGroups.concat(groupsData);
+// ਆਟੋਮੈਟਿਕ ਅਸਲੀ DP ਅਤੇ ਨਾਮ ਲਿਆਉਣ ਵਾਲਾ ਸਿਸਟਮ
+async function loadAutoGroups() {
+  const DEFAULT_IMG = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
+
+  for (let item of rawGroupLinks) {
+    let autoTitle = "WhatsApp Group";
+    let autoDP = DEFAULT_IMG;
+
+    try {
+      let res = await fetch('https://api.microlink.io?url=' + encodeURIComponent(item.link));
+      let json = await res.json();
+      if (json.status === "success" && json.data) {
+        if (json.data.title) autoTitle = json.data.title.replace("WhatsApp Group Invite", "").trim();
+        if (json.data.image && json.data.image.url) autoDP = json.data.image.url;
+      }
+    } catch(e) {}
+
+    const formattedGroup = {
+      title: autoTitle,
+      image: autoDP,
+      desc: "Active WhatsApp group for daily updates.",
+      cat: item.cat,
+      country: item.country,
+      lang: item.lang,
+      link: item.link
+    };
+
+    if (typeof groupsData !== 'undefined') {
+      groupsData.unshift(formattedGroup);
+      if (typeof filterGroups === 'function') filterGroups();
+    }
+  }
 }
+
+loadAutoGroups();
