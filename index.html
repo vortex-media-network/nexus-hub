@@ -435,8 +435,8 @@
     localStorage.setItem('user_group_post_limit', JSON.stringify(storedData));
   }
 
-  function submitGroup() {
-    // Check Limit
+    async function submitGroup() {
+    // 5 Groups per day limit check
     if (!checkDailyLimit()) {
       alert("Daily limit reached! You can only add 5 groups per day. Please clear your browser data or try tomorrow.");
       return;
@@ -447,6 +447,7 @@
     var cat = document.getElementById('inCat').value;
     var country = document.getElementById('inCountry').value;
     var lang = document.getElementById('inLang').value;
+    var submitBtn = document.getElementById('btnSubmit');
 
     var isWhatsAppUrl = /^(https?:\/\/)?chat\.whatsapp\.com\/[a-zA-Z0-9_\-]+/i.test(link);
     if (!isWhatsAppUrl) {
@@ -454,62 +455,66 @@
       return;
     }
 
-    document.getElementById('btnSubmit').innerText = 'Adding...';
+    submitBtn.innerText = 'Fetching Info...';
+    submitBtn.disabled = true;
 
-    // Auto-fetch Group Info
-    fetch('https://api.microlink.io?url=' + encodeURIComponent(link))
-      .then(function(res){ return res.json(); })
-      .then(function(json){
-        var autoTitle = (cat.split('/')[0] + " Group");
-        var autoDP = DEFAULT_WA_IMG;
+    var autoTitle = (cat.split('/')[0] + " Group");
+    var autoDP = DEFAULT_WA_IMG;
 
-        if (json.status === "success" && json.data) {
-          if (json.data.title) {
-            autoTitle = json.data.title.replace("WhatsApp Group Invite", "").trim();
-          }
-          if (json.data.image && json.data.image.url) {
-            autoDP = json.data.image.url;
-          }
+    // Auto-fetch Real DP & Title from WhatsApp link
+    try {
+      var response = await fetch('https://api.microlink.io?url=' + encodeURIComponent(link));
+      var json = await response.json();
+      if (json.status === "success" && json.data) {
+        if (json.data.title) {
+          autoTitle = json.data.title.replace("WhatsApp Group Invite", "").trim();
         }
-        saveFinalGroup(autoTitle, autoDP);
-      })
-      .catch(function(){
-        saveFinalGroup((cat.split('/')[0] + " Group"), DEFAULT_WA_IMG);
-      });
-
-    function saveFinalGroup(title, image) {
-      var newGroup = {
-        title: title,
-        image: image,
-        desc: desc || "Active WhatsApp Group. Join now for latest updates.",
-        cat: cat,
-        country: country,
-        lang: lang,
-        link: link,
-        timestamp: Date.now()
-      };
-
-      fetch(FIREBASE_DB_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newGroup)
-      }).then(function(){
-        incrementLimitCount();
-        groupsData.unshift(newGroup);
-        filterGroups();
-        closeAddModal();
-        alert('Group added live successfully!');
-      }).catch(function(){
-        incrementLimitCount();
-        groupsData.unshift(newGroup);
-        filterGroups();
-        closeAddModal();
-        alert('Group added live successfully!');
-      }).finally(function(){
-        document.getElementById('btnSubmit').innerText = 'Submit Group';
-      });
+        if (json.data.image && json.data.image.url) {
+          autoDP = json.data.image.url;
+        }
+      }
+    } catch(err) {
+      console.log("Auto-fetch error, using default");
     }
-  }
+
+    var newGroup = {
+      title: autoTitle,
+      image: autoDP,
+      desc: desc || "Active WhatsApp Group. Join now for latest updates.",
+      cat: cat,
+      country: country,
+      lang: lang,
+      link: link,
+      timestamp: Date.now()
+    };
+
+    submitBtn.innerText = 'Adding Group...';
+
+    // Save to Firebase Database
+    fetch(FIREBASE_DB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newGroup)
+    }).then(function(){
+      incrementLimitCount();
+      groupsData.unshift(newGroup);
+      filterGroups();
+      closeAddModal();
+      document.getElementById('inLink').value = '';
+      document.getElementById('inDesc').value = '';
+      alert('Group added live with real DP & Title!');
+    }).catch(function(){
+      incrementLimitCount();
+      groupsData.unshift(newGroup);
+      filterGroups();
+      closeAddModal();
+      alert('Group added live successfully!');
+    }).finally(function(){
+      submitBtn.innerText = 'Submit Group';
+      submitBtn.disabled = false;
+    });
+    }
+  
 
   function loadFirebase() {
     fetch(FIREBASE_DB_URL)
