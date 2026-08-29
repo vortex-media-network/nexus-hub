@@ -1,13 +1,13 @@
 const rawGroupLinks = [
-  { link: "https://chat.whatsapp.com/DKS5S5X0Sy19q0IAVcxkBZ?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
-  { link: "https://chat.whatsapp.com/CauEa4KfmPFB1lioEt2dBF?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
-  { link: "https://chat.whatsapp.com/ENmCjtoWmssKJEwq9rjPGb?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
-  { link: "https://chat.whatsapp.com/Bhfq7PdToX5IHa1KjoVqsd?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
-  { link: "https://chat.whatsapp.com/LauIaRlXCT24I2arL0Q0eo?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
-  { link: "https://chat.whatsapp.com/LegsrYsosn94ZKEj42dWAJ?s=cl&p=a&nlu=4", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" }
+  { link: "https://chat.whatsapp.com/BVJwSvpreoyHY1oMTBx8Bt", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/J8Up1ZvNj6QLdkCLxTnfDU", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/Jt1yogOBevFD4r49cxhX1k", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/HKrKQD04IzoLXi5frokzcb", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/Bauu0OOHFL4IL2h1FAxZu5", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/I8mnDdX9Nhx8v7iUFdoaqG", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" },
+  { link: "https://chat.whatsapp.com/Fg1BUTN0vkSGncqebvnbzQ", cat: "Adult/18+/Hot", country: "India", lang: "Tamil" }
 ];
 
-// ਆਟੋਮੈਟਿਕ ਅਸਲੀ DP ਅਤੇ ਨਾਮ ਲਿਆਉਣ ਵਾਲਾ ਸਿਸਟਮ
 async function loadAutoGroups() {
   const DEFAULT_IMG = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
 
@@ -41,4 +41,6 @@ async function loadAutoGroups() {
   }
 }
 
-loadAutoGroups();
+document.addEventListener('DOMContentLoaded', function() {
+  loadAutoGroups();
+});
