@@ -241,6 +241,17 @@ function initDropdowns() {
   if(inCount) inCount.innerHTML = countries.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   if(inLang) inLang.innerHTML = languages.map(function(l){ return '<option value="'+l+'">'+l+'</option>'; }).join('');
 }
+function getStatusBadge(index) {
+  var mod = index % 3;
+  if (mod === 0) {
+    return '<span class="badge-status badge-active">🟢 Active</span>';
+  } else if (mod === 1) {
+    return '<span class="badge-status badge-trending">🔥 Trending</span>';
+  } else {
+    return '<span class="badge-status badge-verified">⭐ Verified</span>';
+  }
+}
+
 function renderList(list) {
   var container = document.getElementById('groupGrid');
   if (!container) return;
@@ -251,18 +262,22 @@ function renderList(list) {
     return;
   }
 
-  list.forEach(function(g) {
+  list.forEach(function(g, index) {
     var card = document.createElement('div');
     card.className = 'group-card';
     var mainCat = (g.cat || 'General').split('/')[0];
     var img = g.image || DEFAULT_WA_IMG;
     var cleanTitle = sanitize(g.title || 'WhatsApp Group');
+    var badgeHtml = getStatusBadge(index);
 
     card.innerHTML = 
       '<div class="card-top">' +
         '<img src="' + img + '" class="group-avatar-img" onerror="this.src=\'' + DEFAULT_WA_IMG + '\'">' +
-        '<div>' +
-          '<div class="card-title">' + cleanTitle + '</div>' +
+        '<div style="flex:1;">' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">' +
+            '<div class="card-title">' + cleanTitle + '</div>' +
+            badgeHtml +
+          '</div>' +
           '<div class="card-meta-line"><span>📚 ' + sanitize(g.cat || 'General') + '</span> • <span>🌍 ' + sanitize(g.country || 'India') + '</span> • <span>🗣️ ' + sanitize(g.lang || 'English') + '</span></div>' +
         '</div>' +
       '</div>' +
@@ -278,6 +293,7 @@ function renderList(list) {
     container.appendChild(card);
   });
 }
+
 
 function startJoinFlow(link) {
   selectedGroupLink = link;
