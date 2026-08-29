@@ -32,11 +32,13 @@
   <div id="homeView">
     <input type="text" id="searchInput" class="search-box-input" placeholder="Type Keywords to Search..." oninput="filterGroups()">
     <button type="button" class="btn-add-main" onclick="openAddModal()">+ Add WhatsApp Group Link</button>
-    <div class="filter-card">
-      <select id="filterCategory" onchange="filterGroups()"></select>
-      <select id="filterCountry" onchange="filterGroups()"></select>
-      <select id="filterLanguage" onchange="filterGroups()"></select>
-    </div>
+        <div class="filter-card">
+      <select id="filterCategory"></select>
+      <select id="filterCountry"></select>
+      <select id="filterLanguage"></select>
+      <button type="button" class="btn-find-group" onclick="filterGroups()">Find group</button>
+        </div>
+    
     <div class="group-list" id="groupGrid"></div>
   </div>
 
