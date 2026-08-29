@@ -197,3 +197,19 @@ footer {
   line-height: 1.6;
   text-align: center;
 }
+.btn-find-group {
+  width: 100%;
+  background: #00d26a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 2px 6px rgba(0, 210, 106, 0.25);
+}
+.btn-find-group:hover {
+  background: #00b85c;
+}
