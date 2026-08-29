@@ -5,9 +5,218 @@ var DEFAULT_WA_IMG = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsA
 var selectedGroupLink = "";
 var reportingGroupTitle = "";
 
-var categories = ["Adult/18+/Hot", "Comedy/Funny", "Education/School", "Entertainment/Masti", "Gaming/Apps", "Money/Earning", "Social/Friendship/Community"];
-var countries = ["India", "Pakistan", "United States", "United Kingdom", "Worldwide / Global"];
-var languages = ["English", "Hindi", "Punjabi", "Tamil", "Telugu", "Urdu"];
+// 📌 ਸਕ੍ਰੀਨਸ਼ਾਟਾਂ ਵਾਲੀਆਂ ਸਾਰੀਆਂ 28 ਕੈਟਾਗਰੀਆਂ (All Categories)
+var categories = [
+  "Adult/18+/Hot",
+  "Art/Design/Photography",
+  "Auto/Vehicle",
+  "Business/Advertising/Marketing",
+  "Comedy/Funny",
+  "Dating/Flirting/Chatting",
+  "Education/School",
+  "Entertainment/Masti",
+  "Family/Relationships",
+  "Fan Club/Celebrities",
+  "Fashion/Style/Clothing",
+  "Film/Animation",
+  "Food/Drinks",
+  "Gaming/Apps",
+  "Health/Beauty/Fitness",
+  "Jobs/Career",
+  "Money/Earning",
+  "Music/Audio/Songs",
+  "News/Magazines/Politics",
+  "Pets/Animals/Nature",
+  "Roleplay/Comics",
+  "Science/Technology",
+  "Shopping/Buy/Sell",
+  "Social/Friendship/Community",
+  "Spiritual/Devotional",
+  "Sports/Games",
+  "Thoughts/Quotes/Jokes",
+  "Travel/Local/Place"
+];
+
+// 🌍 ਸਕ੍ਰੀਨਸ਼ਾਟਾਂ ਵਾਲੇ ਸਾਰੇ 90+ ਦੇਸ਼ (All Countries A to Z)
+var countries = [
+  "India",
+  "Pakistan",
+  "United States",
+  "United Kingdom",
+  "United Arab Emirates",
+  "Saudi Arabia",
+  "Algeria",
+  "Argentina",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahrain",
+  "Bangladesh",
+  "Belarus",
+  "Belgium",
+  "Bolivia",
+  "Bosnia and Herzegovina",
+  "Brazil",
+  "Bulgaria",
+  "Canada",
+  "Chile",
+  "China",
+  "Colombia",
+  "Croatia",
+  "Czechia",
+  "Denmark",
+  "Egypt",
+  "Estonia",
+  "Ethiopia",
+  "Finland",
+  "France",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Hong Kong",
+  "Iceland",
+  "Indonesia",
+  "Iraq",
+  "Ireland",
+  "Israel",
+  "Italy",
+  "Jamaica",
+  "Japan",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kuwait",
+  "Latvia",
+  "Lebanon",
+  "Libya",
+  "Lithuania",
+  "Luxembourg",
+  "Macedonia",
+  "Malawi",
+  "Malaysia",
+  "Mexico",
+  "Montenegro",
+  "Morocco",
+  "Mozambique",
+  "Nepal",
+  "Netherlands",
+  "New Zealand",
+  "Nigeria",
+  "Norway",
+  "Oman",
+  "Panama",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Puerto Rico",
+  "Qatar",
+  "Romania",
+  "Russia",
+  "Senegal",
+  "Serbia",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Sri Lanka",
+  "Sweden",
+  "Switzerland",
+  "Taiwan",
+  "Tanzania",
+  "Thailand",
+  "Togo",
+  "Tunisia",
+  "Turkey",
+  "Uganda",
+  "Ukraine",
+  "Venezuela",
+  "Vietnam",
+  "Yemen",
+  "Zimbabwe",
+  "Worldwide / Global"
+];
+
+// 🗣️ ਸਕ੍ਰੀਨਸ਼ਾਟਾਂ ਵਾਲੀਆਂ ਸਾਰੀਆਂ 50+ ਭਾਸ਼ਾਵਾਂ (All Languages A to Z)
+var languages = [
+  "English",
+  "Hindi",
+  "Punjabi",
+  "Urdu",
+  "Tamil",
+  "Telugu",
+  "Afrikaans",
+  "Albanian",
+  "Amharic",
+  "Arabic",
+  "Armenian",
+  "Azerbaijani",
+  "Bangla",
+  "Basque",
+  "Belarusian",
+  "Bosnian",
+  "Bulgarian",
+  "Catalan",
+  "Chinese",
+  "Croatian",
+  "Czech",
+  "Danish",
+  "Dutch",
+  "Estonian",
+  "Filipino",
+  "Finnish",
+  "French",
+  "Galician",
+  "Georgian",
+  "German",
+  "Greek",
+  "Gujarati",
+  "Hebrew",
+  "Hungarian",
+  "Icelandic",
+  "Indonesian",
+  "Italian",
+  "Japanese",
+  "Kannada",
+  "Kazakh",
+  "Khmer",
+  "Korean",
+  "Kurdish",
+  "Kyrgyz",
+  "Lao",
+  "Latvian",
+  "Lithuanian",
+  "Macedonian",
+  "Malay",
+  "Malayalam",
+  "Marathi",
+  "Mongolian",
+  "Myanmar",
+  "Nepali",
+  "Norwegian",
+  "Persian",
+  "Polish",
+  "Portuguese",
+  "Romanian",
+  "Russian",
+  "Serbian",
+  "Sinhala",
+  "Slovak",
+  "Slovenian",
+  "Spanish",
+  "Swahili",
+  "Swedish",
+  "Thai",
+  "Turkish",
+  "Ukrainian",
+  "Uzbek",
+  "Vietnamese",
+  "Zulu"
+];
+
 var groupsData = [];
 
 function sanitize(str) {
@@ -32,7 +241,6 @@ function initDropdowns() {
   if(inCount) inCount.innerHTML = countries.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   if(inLang) inLang.innerHTML = languages.map(function(l){ return '<option value="'+l+'">'+l+'</option>'; }).join('');
 }
-
 function renderList(list) {
   var container = document.getElementById('groupGrid');
   if (!container) return;
@@ -55,7 +263,7 @@ function renderList(list) {
         '<img src="' + img + '" class="group-avatar-img" onerror="this.src=\'' + DEFAULT_WA_IMG + '\'">' +
         '<div>' +
           '<div class="card-title">' + cleanTitle + '</div>' +
-          '<div class="card-meta-line"><span>📚 ' + sanitize(g.cat || 'General') + '</span> • <span>🌍 ' + sanitize(g.country || 'India') + '</span></div>' +
+          '<div class="card-meta-line"><span>📚 ' + sanitize(g.cat || 'General') + '</span> • <span>🌍 ' + sanitize(g.country || 'India') + '</span> • <span>🗣️ ' + sanitize(g.lang || 'English') + '</span></div>' +
         '</div>' +
       '</div>' +
       '<div class="card-desc">' + sanitize(g.desc || 'Active WhatsApp Group.') + '</div>' +
@@ -85,7 +293,7 @@ function goToStep2() {
 }
 
 function finalWhatsAppRedirect() {
-  if (typeof ADSTERRA_DIRECT_LINK !== 'undefined') {
+  if (typeof ADSTERRA_DIRECT_LINK !== 'undefined' && ADSTERRA_DIRECT_LINK) {
     window.open(ADSTERRA_DIRECT_LINK, '_blank');
   }
   setTimeout(function() {
