@@ -241,16 +241,10 @@ function initDropdowns() {
   if(inCount) inCount.innerHTML = countries.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   if(inLang) inLang.innerHTML = languages.map(function(l){ return '<option value="'+l+'">'+l+'</option>'; }).join('');
 }
-function getStatusBadge(index) {
-  var mod = index % 3;
-  if (mod === 0) {
-    return '<span class="badge-status badge-active">🟢 Active</span>';
-  } else if (mod === 1) {
-    return '<span class="badge-status badge-trending">🔥 Trending</span>';
-  } else {
-    return '<span class="badge-status badge-verified">⭐ Verified</span>';
-  }
+function getStatusBadge() {
+  return '<span class="badge-status badge-active">🟢 Active</span>';
 }
+
 
 function renderList(list) {
   var container = document.getElementById('groupGrid');
