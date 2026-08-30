@@ -25,7 +25,7 @@ var countries = [
   "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia",
   "Lebanon", "Libya", "Lithuania", "Luxembourg", "Macedonia", "Malawi", "Malaysia",
   "Mexico", "Montenegro", "Morocco", "Mozambique", "Nepal", "Netherlands", "New Zealand",
-  "Nigeria", "Norway", "Oman", "Panama", "Peru", "Philippines", "Poland", "Portugal",
+  "Nigeria", "Norway", "Oman", "Panama", "Peru", "Philippines", "Poland", "Portuguese",
   "Puerto Rico", "Qatar", "Romania", "Russia", "Senegal", "Serbia", "Singapore",
   "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden",
   "Switzerland", "Taiwan", "Tanzania", "Thailand", "Togo", "Tunisia", "Turkey",
@@ -68,7 +68,8 @@ function initDropdowns() {
   if(inCat) inCat.innerHTML = categories.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   if(inCount) inCount.innerHTML = countries.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
   if(inLang) inLang.innerHTML = languages.map(function(l){ return '<option value="'+l+'">'+l+'</option>'; }).join('');
-  }
+}
+
 function getStatusBadge() {
   return '<span class="badge-status badge-active">🟢 Active</span>';
 }
@@ -105,7 +106,7 @@ function renderList(list) {
       '<div class="card-desc">' + sanitize(g.desc || 'Active WhatsApp Group.') + '</div>' +
       '<span class="tag-pill">' + sanitize(mainCat) + '</span>' +
       '<div class="card-bottom-actions">' +
-        '<a class="btn-join-text" onclick="startJoinFlow(\'' + encodeURI(g.link || '') + '\')">Join group</a>' +
+        '<a class="btn-join-text" onclick="startJoinFlow(\'' + encodeURI(g.link || '') + '\', \'' + (g._key || '') + '\')">Join group</a>' +
         '<div class="action-right-btns">' +
           '<button class="report-btn" onclick="openReportModal(\'' + cleanTitle + '\')">🚩 Report</button>' +
           '<button class="share-btn-wa" onclick="shareGroup(\'' + encodeURIComponent(cleanTitle) + '\')">Share</button>' +
@@ -115,8 +116,22 @@ function renderList(list) {
   });
 }
 
-function startJoinFlow(link) {
+function startJoinFlow(link, groupKey) {
   selectedGroupLink = link;
+
+  if (groupKey) {
+    var clickUrl = "https://pinksphere-hub-default-rtdb.firebaseio.com/groups/" + groupKey + "/clicks.json";
+    fetch(clickUrl)
+      .then(function(res){ return res.json(); })
+      .then(function(currentClicks){
+        var nextClicks = (Number(currentClicks) || 0) + 1;
+        fetch(clickUrl, {
+          method: 'PUT',
+          body: JSON.stringify(nextClicks)
+        });
+      }).catch(function(){});
+  }
+
   document.getElementById('homeView').style.display = 'none';
   document.getElementById('step1View').style.display = 'block';
   window.scrollTo(0, 0);
@@ -234,6 +249,7 @@ async function submitGroup() {
     country: country,
     lang: lang,
     link: link,
+    clicks: 0,
     timestamp: Date.now()
   };
 
@@ -257,8 +273,13 @@ function loadFirebase() {
     .then(function(res){ return res.json(); })
     .then(function(data){
       if (data) {
-        var fbList = Object.values(data).reverse();
-        groupsData = groupsData.concat(fbList);
+        var fbList = [];
+        Object.keys(data).forEach(function(key) {
+          var item = data[key];
+          item._key = key;
+          fbList.push(item);
+        });
+        groupsData = groupsData.concat(fbList.reverse());
       }
       filterGroups();
     })
@@ -269,3 +290,4 @@ document.addEventListener('DOMContentLoaded', function() {
   initDropdowns();
   loadFirebase();
 });
+      
