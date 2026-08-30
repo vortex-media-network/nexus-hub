@@ -3,6 +3,8 @@ var FIREBASE_REPORTS_URL = "https://pinksphere-hub-default-rtdb.firebaseio.com/r
 var DEFAULT_WA_IMG = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
 
 var selectedGroupLink = "";
+var selectedTrackId = "";
+var selectedGroupTitle = "";
 var reportingGroupTitle = "";
 
 var categories = [
@@ -25,7 +27,7 @@ var countries = [
   "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Latvia",
   "Lebanon", "Libya", "Lithuania", "Luxembourg", "Macedonia", "Malawi", "Malaysia",
   "Mexico", "Montenegro", "Morocco", "Mozambique", "Nepal", "Netherlands", "New Zealand",
-  "Nigeria", "Norway", "Oman", "Panama", "Peru", "Philippines", "Poland", "Portuguese",
+  "Nigeria", "Norway", "Oman", "Panama", "Peru", "Philippines", "Poland", "Portugal",
   "Puerto Rico", "Qatar", "Romania", "Russia", "Senegal", "Serbia", "Singapore",
   "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden",
   "Switzerland", "Taiwan", "Tanzania", "Thailand", "Togo", "Tunisia", "Turkey",
@@ -91,6 +93,9 @@ function renderList(list) {
     var img = g.image || DEFAULT_WA_IMG;
     var cleanTitle = sanitize(g.title || 'WhatsApp Group');
     var badgeHtml = getStatusBadge();
+    
+    // ਟਰੈਕਿੰਗ ਲਈ ਆਈਡੀ
+    var trackId = g._key || ("Static_" + cleanTitle.replace(/[^a-zA-Z0-9]/g, "").substring(0, 15));
 
     card.innerHTML = 
       '<div class="card-top">' +
@@ -106,7 +111,7 @@ function renderList(list) {
       '<div class="card-desc">' + sanitize(g.desc || 'Active WhatsApp Group.') + '</div>' +
       '<span class="tag-pill">' + sanitize(mainCat) + '</span>' +
       '<div class="card-bottom-actions">' +
-        '<a class="btn-join-text" onclick="startJoinFlow(\'' + encodeURI(g.link || '') + '\', \'' + (g._key || '') + '\')">Join group</a>' +
+        '<a class="btn-join-text" onclick="startJoinFlow(\'' + encodeURI(g.link || '') + '\', \'' + trackId + '\', \'' + cleanTitle + '\')">Join group</a>' +
         '<div class="action-right-btns">' +
           '<button class="report-btn" onclick="openReportModal(\'' + cleanTitle + '\')">🚩 Report</button>' +
           '<button class="share-btn-wa" onclick="shareGroup(\'' + encodeURIComponent(cleanTitle) + '\')">Share</button>' +
@@ -116,20 +121,18 @@ function renderList(list) {
   });
 }
 
-function startJoinFlow(link, groupKey) {
+function startJoinFlow(link, trackId, title) {
   selectedGroupLink = link;
+  selectedTrackId = trackId;
+  selectedGroupTitle = title;
 
-  if (groupKey) {
-    var clickUrl = "https://pinksphere-hub-default-rtdb.firebaseio.com/groups/" + groupKey + "/clicks.json";
-    fetch(clickUrl)
-      .then(function(res){ return res.json(); })
-      .then(function(currentClicks){
-        var nextClicks = (Number(currentClicks) || 0) + 1;
-        fetch(clickUrl, {
-          method: 'PUT',
-          body: JSON.stringify(nextClicks)
-        });
-      }).catch(function(){});
+  if (trackId) {
+    var statUrl = "https://pinksphere-hub-default-rtdb.firebaseio.com/group_stats/" + trackId + ".json";
+    fetch(statUrl).then(function(r){ return r.json(); }).then(function(data){
+      var c = (data && data.clicks) ? Number(data.clicks) : 0;
+      var j = (data && data.joins) ? Number(data.joins) : 0;
+      fetch(statUrl, { method: 'PATCH', body: JSON.stringify({ title: title, clicks: c + 1, joins: j }) });
+    }).catch(function(){});
   }
 
   document.getElementById('homeView').style.display = 'none';
@@ -144,6 +147,14 @@ function goToStep2() {
 }
 
 function finalWhatsAppRedirect() {
+  if (selectedTrackId) {
+    var statUrl = "https://pinksphere-hub-default-rtdb.firebaseio.com/group_stats/" + selectedTrackId + ".json";
+    fetch(statUrl).then(function(r){ return r.json(); }).then(function(data){
+      var j = (data && data.joins) ? Number(data.joins) : 0;
+      fetch(statUrl, { method: 'PATCH', body: JSON.stringify({ joins: j + 1 }) });
+    }).catch(function(){});
+  }
+
   if (typeof ADSTERRA_DIRECT_LINK !== 'undefined' && ADSTERRA_DIRECT_LINK) {
     window.open(ADSTERRA_DIRECT_LINK, '_blank');
   }
@@ -249,7 +260,6 @@ async function submitGroup() {
     country: country,
     lang: lang,
     link: link,
-    clicks: 0,
     timestamp: Date.now()
   };
 
@@ -290,4 +300,4 @@ document.addEventListener('DOMContentLoaded', function() {
   initDropdowns();
   loadFirebase();
 });
-      
+               
